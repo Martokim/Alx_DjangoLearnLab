@@ -4,6 +4,7 @@
  Retrieve the librarian for a library.
 '''
 from relationship_app.models import Author, Book, Library, Librarian
+from bookshelf.models import Book
 
 def get_books_by_author(author_name):
     try:
@@ -27,3 +28,5 @@ def get_librarian_for_library(library_name):
         return None
     except Librarian.DoesNotExist:
         return None
+def get_books_by_author(author):
+    return Book.objects.filter(author=author)
