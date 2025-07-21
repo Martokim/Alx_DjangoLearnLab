@@ -1,0 +1,16 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore SQLite database
+*.sqlite3
+
+# Ignore Django migration cache
+*.py[cod]
+*.log
+
+# Ignore all migration compiled files
+*/migrations/__pycache__/
+
+# Ignore environment files (if any)
+.env
