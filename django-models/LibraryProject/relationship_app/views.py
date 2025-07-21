@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 
 #function-based view to display all books
-def book_list(request):
+def list_books(request):
     books = Book.objects.all()
     return render(request,'relationship_app/list_books.html',{'books': books})
 
