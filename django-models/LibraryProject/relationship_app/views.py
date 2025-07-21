@@ -1,5 +1,6 @@
 from django.shortcuts import render , get_object_or_404
-from bookshelf.models import Book , Library
+from .models import Library
+from bookshelf.models import Book 
 from django.views.generic.detail import DetailView
 
 #function-based view to display all books
@@ -10,5 +11,6 @@ def book_list(request):
 # Class-based view to display details of a specific library
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'library_detail.html'
+    template_name = 'relationship_app/library_detail.html'
+
     context_object_name = 'library'
