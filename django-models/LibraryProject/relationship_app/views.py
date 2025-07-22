@@ -4,7 +4,8 @@ from bookshelf.models import Book
 from django.views.generic.detail import DetailView
 
 # Import necessary modules for authentication
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login
+from django.contrib.auth import authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
