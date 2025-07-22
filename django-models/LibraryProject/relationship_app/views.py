@@ -28,8 +28,8 @@ def register_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Log the user in after registration
-            return redirect('book-list')  # redirect to home or book list
+            login(request, user) # Automatically log in the user after registration
+            return redirect('list_books')  
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
@@ -38,16 +38,17 @@ def register_view(request):
 # user login view
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('book-list')  # or wherever you want
+            return redirect('list_books') 
     else:
         form = AuthenticationForm()
     return render(request, 'relationship_app/login.html', {'form': form})
 
+
 # user logout view
 def logout_view(request):
     logout(request)
-    return render(request, 'relationship_app/logout.html')
+    return redirect('login')  
