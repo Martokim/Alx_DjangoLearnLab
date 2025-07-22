@@ -14,9 +14,17 @@ class Book(models.Model):
     author = models.ForeignKey('Author', on_delete=models.CASCADE)  
     publication_year = models.IntegerField()
 
+    class Meta:
+        permissions = [ 
+            ("can_add_book", "can add a book"),
+            ("can_change_book", "can change a book"),
+            ("can_delete_book","can delete a book"),
+
+        ]
+
 
     def __str__(self):
-        return f"{self.title} by {self.author.name}"
+        return self.title
 
 # 3. Library model
 class Library(models.Model):
