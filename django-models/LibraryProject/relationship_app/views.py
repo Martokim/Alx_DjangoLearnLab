@@ -11,8 +11,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 # import necessary models and user model
-from django.db import models
-from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 
@@ -61,19 +59,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')  
-
-# user model to include user roles permission
-class UserProfile(models.Model):
-    ROLE_CHOICES = [
-        ('admin', 'Admin'),
-        ('librarian', 'Librarian'),
-        ('member', 'Member'),
-    ]
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    
-    def __str__(self):
-        return f"{self.user.username} - {self.role}"
 
 # role-based views 
 def is_admin(user):
