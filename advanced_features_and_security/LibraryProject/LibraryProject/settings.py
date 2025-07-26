@@ -133,11 +133,25 @@ LOGOUT_REDIRECT_URL = 'login'
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 
-# Security settings
+# ======= Security settings =======
+# Enable the browser's XSS filter
 SECURE_BROWSER_XSS_FILTER = True
+
+#prevent clickjacking
 X_FRAME_OPTIONS = 'DENY'
+
+# prevent MIME type sniffing
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Secure cookie handling
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+
+# Redirect all HTTP traffic to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
