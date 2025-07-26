@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+2b&xd26nnv+8+0w0h&xl-y$=1&-$42agxe_bc%q(fg(_ag5r0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'LibraryProject.bookshelf.middleware.CSPMiddleware',  # Custom Content Security Policy middleware
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -130,3 +131,13 @@ LOGOUT_REDIRECT_URL = 'login'
 
 # Custom user model
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
+
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
+x_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Secure cookie handling
+CRSF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
