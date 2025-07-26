@@ -1,20 +1,42 @@
-#  Django Permissions and Groups Setup – LibraryProject
+# LibraryProject – Task 2: Access and Permissions
 
-This guide explains how custom permissions and user groups are set up and used in the `LibraryProject`, specifically for managing `Book` objects within the `bookshelf` app.
+This project implements a basic Library Management System using Django, with a focus on **role-based access control**, **form handling**, and **secure book management**.
 
 ---
 
-##  Custom Permissions
+##  Objectives
 
-Custom permissions are defined inside the `Meta` class of the `Book` model.
+- Introduce custom user model with additional fields.
+- Implement access control using Django’s permission system.
+- Securely manage book creation and listing via forms.
+- Follow ALX best practices for modular, secure web applications.
 
-###  Defined Permissions:
-```python
-class Book(models.Model):
-    ...
-    class Meta:
-        permissions = [
-            ("can_create", "Can create books"),
-            ("can_edit", "Can edit books"),
-            ("can_delete", "Can delete books"),
-        ]
+---
+
+##  Project Structure
+LibraryProject/
+├── bookshelf/
+│ ├── forms.py 
+│ ├── models.py 
+│ ├── views.py 
+│ ├── urls.py
+│ ├── templates/
+│ │ └── bookshelf/
+│ │ ├── book_list.html
+│ │ └── form_example.html
+│ └── admin.py
+├── LibraryProject/
+│ └── settings.py 
+
+
+---
+
+##  Custom User Model
+
+A custom user model `CustomUser` extends `AbstractUser`, with:
+
+- `date_of_birth` (DateField)
+- `profile_photo` (ImageField)
+
+Defined in `bookshelf/models.py`, and set via:
+
