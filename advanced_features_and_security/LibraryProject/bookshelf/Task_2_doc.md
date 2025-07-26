@@ -1,16 +1,3 @@
-# LibraryProject – Task 2: Access and Permissions
-
-This project implements a basic Library Management System using Django, with a focus on **role-based access control**, **form handling**, and **secure book management**.
-
----
-
-##  Objectives
-
-- Introduce custom user model with additional fields.
-- Implement access control using Django’s permission system.
-- Securely manage book creation and listing via forms.
-- Follow ALX best practices for modular, secure web applications.
-
 ---
 
 ##  Project Structure
@@ -39,4 +26,38 @@ A custom user model `CustomUser` extends `AbstractUser`, with:
 - `profile_photo` (ImageField)
 
 Defined in `bookshelf/models.py`, and set via:
+```python
+# LibraryProject/settings.py
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
+```
+## Book Model and permissions
+permissions = [
+    ("can_create", "Can create a book"),
+    ("can_edit", "Can edit a book"),
+    ("can_view", "Can view a book"),
+    ("can_delete", "Can delete a book"),
+]
+
+
+## Security Settings
+``` python 
+# LibraryProject/settings.py
+  X_FRAME_OPTIONS = 'DENY'
+  CSRF_COOKIE_SECURE = True
+
+```
+
+## Testing permissions (via Django shell)
+```Python
+  from django.contrib.auth.models import Permission
+from django.contrib.auth import get_user_model
+User = get_user_model()
+user = User.objects.get(username='username')
+
+# Grant view permission
+view_perm = Permission.objects.get(codename='can_view')
+user.user_permissions.add(view_perm)
+
+```
 
