@@ -2,34 +2,36 @@ from rest_framework import serializers
 from .models import Book, Author
 from datetime import date
 
+class BookSerializer(serializers.ModelSerializer):
+    """
+    BookSerializer:
+    - Serializes the Book model.
+    - Includes a validation to ensure publication_year is not in the future.
+    """
+    class Meta:
+        model = Book
+        fields = ['id', 'title', 'publication_year']
+
+
 class AuthorSerializer(serializers.ModelSerializer):
     """
     AuthorSerializer:
     - Serializes the Author model.
-    - Fields:
-        id: Automatically generated primary key.
-        name: Name of the author.
-    - Relationship Handling:
-        Books written by this author will be serialized separately using BookSerializer (nested serialization).
+    - Includes nested serialization of all related books using BookSerializer.
     """
+    books = BookSerializer(many=True, read_only=True)
+
     class Meta:
         model = Author
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'books']
 
 
 class BookSerializer(serializers.ModelSerializer):
     """
     BookSerializer:
-    - Serializes the Book model.
-    - Fields:
-        id: Automatically generated primary key.
-        title: Title of the book.
-        publication_year: Year the book was published.
-        author: Nested serialization of the related Author object (read-only).
-    - Custom Validation:
-        Ensures that 'publication_year' is not set in the future.
+    - Serializes the Book model with nested Author info.
     """
-    author = AuthorSerializer(many=True , read_only=True)
+    author = AuthorSerializer(read_only=True)
 
     class Meta:
         model = Book
@@ -39,7 +41,7 @@ class BookSerializer(serializers.ModelSerializer):
     def validate_publication_year(self, value):
         """
         Custom Validator:
-        - Ensures the publication year is not in the future.
+        Ensures the publication year is not in the future.
         """
         current_year = date.today().year
         if value > current_year:
