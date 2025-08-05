@@ -29,7 +29,7 @@ class BookSerializer(serializers.ModelSerializer):
     - Custom Validation:
         Ensures that 'publication_year' is not set in the future.
     """
-    author = AuthorSerializer(read_only=True)
+    author = AuthorSerializer(many=True , read_only=True)
 
     class Meta:
         model = Book
