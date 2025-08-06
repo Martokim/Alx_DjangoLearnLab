@@ -1,79 +1,61 @@
-from rest_framework import generics
+from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework import filters 
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Book 
-from .serializers import BookSerializer
+from .models import Book, Author
+from .serializers import BookSerializer, AuthorSerializer
 
 
-# Create your views here.
+# BOOK VIEWS
 
-# 1.list all books
-class BookListView(generics.ListAPIView):
+
+class BookListCreateView(generics.ListCreateAPIView):
     """
-  API view to list all books with filtering, searching, and ordering capabilities.
-    - Filtering: Filter books by title, author, or publication year.
-    - Searching: Search books by title or author's name.
-    - Ordering: Order books by title or publication year.
+    API Endpoint: /api/books/
+    - GET: List all books (supports filtering, searching, and ordering).
+    - POST: Create a new book (authenticated users only).
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]# unauthenticated users can read, but cannot perform CRUD operations
-   # Enable filtering , searchin and ordering
+    permission_classes = [IsAuthenticatedOrReadOnly]  # Unauthenticated users can read only
+
+    # Enable filtering, searching, and ordering
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['title', 'author__name', 'publication_year']  # Filter by these fields
+    search_fields = ['title', 'author__name']  # Search by book title or author's name
+    ordering_fields = ['title', 'publication_year']  # Order results by title or year
+    ordering = ['title']  # Default ordering by title
 
-    # Define filter fields
-    filterset_fields = ['title', 'author_name','publication_year']
-    
-    # Define search fields
-    search_fields = ['title', 'author_name']
-
-    # Define ordering fields
-    ordering_fields = ['title', 'publication_year']
-
-    # Define default ordering
-    ordering = ['title']
-
-# 2. Retrieve a single book by ID
-class BookDetailView(generics.RetrieveAPIView):
+class BookRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     """
-    BookDetailView:
-    - Retrieves a single book by its ID.
-    - Accessible by anyone (read-only).
+    API Endpoint: /api/books/<id>/
+    - GET: Retrieve a single book by ID.
+    - PUT/PATCH: Update a book (authenticated users only).
+    - DELETE: Delete a book (authenticated users only).
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  # unauthenticated users can read, but cannot perform CRUD operations
+    permission_classes = [IsAuthenticated]  # Only authenticated users can modify
 
-# 3. create a new book (create)
-class BookCreateView(generics.CreateAPIView):
-    """
-    BookCreateView:
-    - Allows creation of a new book.
-    - Accessible by authenticated users only.
-    """
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can create books
 
-# 4. Update an existing book (update)
-class BookUpdateView(generics.UpdateAPIView):
-    """
-    BookUpdateView:
-    - Allows updating an existing book by its ID.
-    - Accessible by authenticated users only.
-    """
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated] # Only authenticated users can update books
+# AUTHOR VIEWS
 
-# 5. Delete a book (delete))
-class BookDeleteView(generics.DestroyAPIView):
+class AuthorListCreateView(generics.ListCreateAPIView):
     """
-    BookDeleteView:
-    - Allows deletion of a book by its ID.
-    - Accessible by authenticated users only.
+    API Endpoint: /api/authors/
+    - GET: List all authors (includes their related books).
+    - POST: Create a new author (authenticated users only).
     """
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]# Only authenticated users can delete books
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]  # Read for all, create for authenticated
+
+class AuthorRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API Endpoint: /api/authors/<id>/
+    - GET: Retrieve a single author and their books.
+    - PUT/PATCH: Update author details (authenticated users only).
+    - DELETE: Delete an author (authenticated users only).
+    """
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    permission_classes = [IsAuthenticated]
