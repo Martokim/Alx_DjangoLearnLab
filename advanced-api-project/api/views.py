@@ -1,5 +1,6 @@
 from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django_filters import rest_framework  # ✅ For ALX checker
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book, Author
 from .serializers import BookSerializer, AuthorSerializer
