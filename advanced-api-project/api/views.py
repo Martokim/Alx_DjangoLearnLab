@@ -17,7 +17,7 @@ class BookListCreateView(generics.ListCreateAPIView):
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]  # Unauthenticated users can read only
+    permission_classes = [AllowAny]  # Allow any user to read, authenticated users to create
 
     # Enable filtering, searching, and ordering
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -35,7 +35,7 @@ class BookRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]  # Only authenticated users can modify
+    permission_classes = [AllowAny]  # Allow any user to read, authenticated users to update/delete
 
 
 # AUTHOR VIEWS
@@ -48,7 +48,7 @@ class AuthorListCreateView(generics.ListCreateAPIView):
     """
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = [AllowAny]  # Read for all, create for authenticated
+    permission_classes = [AllowAny]  # Allow any user to read, authenticated users to create
 
 class AuthorRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -59,4 +59,4 @@ class AuthorRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny] # Allow any user to read, authenticated users to update/delete
