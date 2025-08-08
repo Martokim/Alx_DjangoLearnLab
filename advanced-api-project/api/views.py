@@ -1,5 +1,5 @@
 from rest_framework import generics, filters
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated,AllowAny
 from django_filters import rest_framework  
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book, Author
@@ -17,7 +17,7 @@ class BookListCreateView(generics.ListCreateAPIView):
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  # Unauthenticated users can read only
+    permission_classes = [AllowAny]  # Unauthenticated users can read only
 
     # Enable filtering, searching, and ordering
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -35,7 +35,7 @@ class BookRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can modify
+    permission_classes = [AllowAny]  # Only authenticated users can modify
 
 
 # AUTHOR VIEWS
@@ -48,7 +48,7 @@ class AuthorListCreateView(generics.ListCreateAPIView):
     """
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  # Read for all, create for authenticated
+    permission_classes = [AllowAny]  # Read for all, create for authenticated
 
 class AuthorRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -59,4 +59,4 @@ class AuthorRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
