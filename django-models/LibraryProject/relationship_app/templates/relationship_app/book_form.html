@@ -1,0 +1,7 @@
+<!-- relationship_app/templates/relationship_app/book_form.html -->
+<h2>{{ form.instance.pk|yesno:"Edit Book,Add Book" }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
