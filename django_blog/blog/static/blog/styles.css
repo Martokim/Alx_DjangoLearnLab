@@ -1,0 +1,5 @@
+body { font-family: system-ui, sans-serif; margin: 2rem; }
+nav a { margin-right: 1rem; }
+.messages { list-style: none; padding: 0; }
+.messages li { background: #e6ffed; border: 1px solid #b7eb8f; padding: .5rem; margin: .5rem 0; }
+form { max-width: 420px; }
