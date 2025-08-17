@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Posts</title>
+</head>
+<body>
+    <h1>All Blog Posts</h1>
+    <ul>
+        {% for post in object_list %}
+            <li>
+                <a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'post-create' %}">Create New Post</a>
+</body>
+</html>
