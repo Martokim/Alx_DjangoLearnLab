@@ -25,11 +25,11 @@ class ProfileForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['author_name', 'text']  
+        fields = ['author_name', 'content']  # <- use "content", not "text"
 
-    # Example validation rule
-    def clean_text(self):
-        text = self.cleaned_data.get('text')
-        if len(text) < 5:
+    # Example validation for content
+    def clean_content(self):
+        content = self.cleaned_data.get('content')
+        if len(content) < 5:
             raise forms.ValidationError("Comment must be at least 5 characters long.")
-        return text
+        return content
