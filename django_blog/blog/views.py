@@ -22,6 +22,16 @@ class PostListView(ListView):
             ).distinct()
         return queryset
 
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        return Post.objects.filter(tags__slug=tag_slug)
+    
+
 
 class PostDetailView(DetailView):
     model = Post
