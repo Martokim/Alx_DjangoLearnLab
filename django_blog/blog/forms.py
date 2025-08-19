@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Comment , Post
+from taggit.models import TagWiget 
 
 class ResisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -33,3 +34,11 @@ class CommentForm(forms.ModelForm):
         if len(content) < 5:
             raise forms.ValidationError("Comment must be at least 5 characters long.")
         return content
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model =Post
+        fields = ["title","content","tags"]
+        wigets = {
+            "tags": TagWiget(),
+        }
