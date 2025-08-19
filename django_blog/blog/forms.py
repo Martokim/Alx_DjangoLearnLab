@@ -26,7 +26,7 @@ class ProfileForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['author_name', 'content']  # <- use "content", not "text"
+        fields = ['author', 'content']  # <- use "content", not "text"
 
     # Example validation for content
     def clean_content(self):
