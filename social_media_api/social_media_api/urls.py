@@ -1,11 +1,11 @@
-# social_media_api/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/accounts/", include("accounts.urls")),  # include accounts app URLs
+    path("api/accounts/", include("accounts.urls")),  
+    path("api/posts/", include("posts.urls")),   
 
     # JWT authentication endpoints
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
