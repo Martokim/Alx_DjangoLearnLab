@@ -41,10 +41,25 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'accounts',
     'posts',
-    
+    'drf_spectacular', # For API schema and documentation
 ]
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'  # Custom user model
 
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+}
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Social Media API",
+    "DESCRIPTION": "API documentation for Social Media API (posts, comments, accounts, etc.)",
+    "VERSION": "1.0.0",
+    "SECURITY": [{"bearerAuth": []}],# optional
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

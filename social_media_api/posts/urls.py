@@ -1,17 +1,16 @@
-from django.urls import path
-from .views import (
-    PostListCreateView,
-    PostDetailView,
-    CommentListCreateView,
-    CommentDetailView,
-)
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import PostViewSet, CommentViewSet
+from .views import FollowUserView, UnfollowUserView  
+
+router = DefaultRouter()
+router.register(r'posts', PostViewSet, basename='post')
+router.register(r'comments', CommentViewSet, basename='comment')
 
 urlpatterns = [
-    # --- Posts ---
-    path("", PostListCreateView.as_view(), name="post-list-create"),
-    path("<int:pk>/", PostDetailView.as_view(), name="post-detail"),
+    path("", include(router.urls)),
 
-    # --- Comments ---
-    path("<int:post_id>/comments/", CommentListCreateView.as_view(), name="comment-list-create"),
-    path("comments/<int:pk>/", CommentDetailView.as_view(), name="comment-detail"),
+    #  follow/unfollow routes
+    path("users/<int:user_id>/follow/", FollowUserView.as_view(), name="follow-user"),
+    path("users/<int:user_id>/unfollow/", UnfollowUserView.as_view(), name="unfollow-user"),
 ]
