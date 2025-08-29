@@ -50,12 +50,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.Serializer):
     """Serializer for logging in a user"""
-    username = serializers.CharField(required=True)  # ✅ Must use serializers.CharField
-    password = serializers.CharField(
-        write_only=True,
-        required=True,
-        style={"input_type": "password"}
-    )
+    username = serializers.CharField() 
+    password = serializers.CharField()
 
     def validate(self, attrs):
         username = attrs.get("username")
