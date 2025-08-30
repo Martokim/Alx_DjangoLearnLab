@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'accounts',
     'posts',
+    'notifications',
     'drf_spectacular', # For API schema and documentation
 ]
 AUTH_USER_MODEL = 'accounts.CustomUser'  # Custom user model
